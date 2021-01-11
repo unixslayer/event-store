@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "php": "^7.4",
         "unixslayer/event-sourcing": "dev-master",
         "prooph/event-store": "^7.5"
     },
@@ -23,6 +24,9 @@
         "php-coveralls/php-coveralls": "dev-master",
         "roave/security-advisories": "dev-latest",
         "vimeo/psalm": "4.x-dev"
+    },
+    "suggest" : {
+        "prooph/pdo-event-store": "For usage with MySQL or Postgres as event store"
     },
     "autoload": {
         "psr-4": {
