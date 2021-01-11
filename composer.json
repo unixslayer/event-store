@@ -1,0 +1,49 @@
+{
+    "name": "unixslayer/event-store",
+    "description": "",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "unixslayer",
+            "email": "piotr.zajac@unixslayer.pl"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "unixslayer/event-sourcing": "dev-master",
+        "prooph/event-store": "^7.5"
+    },
+    "require-dev": {
+        "ext-pdo": "*",
+        "phpunit/phpunit": "^9.5",
+        "phpspec/prophecy": "^1.12",
+        "prooph/pdo-event-store": "^1.12",
+        "friendsofphp/php-cs-fixer": "2.17.x-dev",
+        "php-coveralls/php-coveralls": "dev-master",
+        "roave/security-advisories": "dev-latest",
+        "vimeo/psalm": "4.x-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "Unixslayer\\EventStore\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Unixslayer\\EventStore\\": "tests/"
+        }
+    },
+    "scripts": {
+        "ci" : [
+            "@test",
+            "@check-cs",
+            "@psalm"
+        ],
+        "check-cs": "php-cs-fixer fix --dry-run",
+        "fix": "php-cs-fixer fix",
+        "psalm":  "psalm",
+        "test": "phpunit --exclude database --testdox",
+        "coveralls": "php-coveralls -v"
+    }
+}
