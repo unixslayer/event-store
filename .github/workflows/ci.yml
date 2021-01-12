@@ -40,7 +40,7 @@ jobs:
           restore-keys: "php-${{ matrix.php }}-${{ matrix.os }}"
 
       - name: "Install dependencies"
-        run: "composer install --no-progress --no-suggest --no-interaction"
+        run: "composer install --prefer-dist --no-progress --no-interaction"
 
       - name: "CI"
         run: "composer ci"
