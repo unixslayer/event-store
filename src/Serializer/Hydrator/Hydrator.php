@@ -16,7 +16,7 @@ use Unixslayer\EventSourcing\AggregateEvent;
 use Unixslayer\EventStore\EventData;
 use Unixslayer\EventStore\Serializer\Hydrator\Exception\HydratorNotFoundException;
 
-class Hydrator implements FromEventDataInterface
+class Hydrator
 {
     private array $hydrators;
 
@@ -27,8 +27,6 @@ class Hydrator implements FromEventDataInterface
 
     public function fromEventData(EventData $eventData): AggregateEvent
     {
-        $exception = new HydratorNotFoundException();
-
         foreach ($this->hydrators as $hydrator) {
             if (!$hydrator->supports($eventData)) {
                 continue;
@@ -37,6 +35,6 @@ class Hydrator implements FromEventDataInterface
             return $hydrator->toEvent($eventData);
         }
 
-        throw $exception;
+        throw new HydratorNotFoundException();
     }
 }

@@ -48,6 +48,7 @@ class HydratorTest extends TestCase
             'payload' => [],
             'metadata' => [
                 '_messageName' => AggregateEvent::class,
+                '_eventVersion' => 1,
             ],
         ];
         $eventData = EventData::fromArray($messageData);
@@ -55,5 +56,25 @@ class HydratorTest extends TestCase
         $event = $hydrator->fromEventData($eventData);
 
         static::assertEquals(Uuid::fromString($messageData['uuid']), $event->uuid());
+    }
+
+    public function testItShouldUseInjectedHydratorsWithProperVersion(): void
+    {
+        $hydrator = new Hydrator(new GenericEventHydrator());
+
+        $messageData = [
+            'message_name' => EventData::class,
+            'uuid' => 'f9f276a7-9426-40dd-b239-b5958d6531fa',
+            'created_at' => new \DateTimeImmutable('now'),
+            'payload' => [],
+            'metadata' => [
+                '_messageName' => AggregateEvent::class,
+                '_eventVersion' => 2,
+            ],
+        ];
+        $eventData = EventData::fromArray($messageData);
+
+        $this->expectException(HydratorNotFoundException::class);
+        $hydrator->fromEventData($eventData);
     }
 }

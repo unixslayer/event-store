@@ -11,8 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.4",
-        "unixslayer/event-sourcing": "dev-master",
+        "php": "^7.4|^8.0",
+        "unixslayer/event-sourcing": "^0.3",
         "prooph/event-store": "^7.5"
     },
     "require-dev": {
@@ -20,8 +20,7 @@
         "phpunit/phpunit": "^9.5",
         "phpspec/prophecy": "^1.12",
         "prooph/pdo-event-store": "^1.12",
-        "friendsofphp/php-cs-fixer": "2.17.x-dev",
-        "php-coveralls/php-coveralls": "dev-master",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "roave/security-advisories": "dev-latest",
         "vimeo/psalm": "4.x-dev"
     },

@@ -19,12 +19,14 @@ You can install this via Composer by running `composer require unixslayer/event-
  
 If you find this library useful and use it, feel free to file an issue. Also, PR will be awesome.
 
-[ico-github]: https://img.shields.io/github/checks-status/unixslayer/event-store/master?style=for-the-badge
-[ico-coverage]: https://img.shields.io/coveralls/github/unixslayer/event-store?style=for-the-badge
-[ico-release]: https://img.shields.io/github/v/release/unixslayer/event-store?style=for-the-badge
-[ico-license]: https://img.shields.io/github/license/unixslayer/event-store?style=for-the-badge
+[ico-tests]: https://github.com/unixslayer/event-store/actions/workflows/tests.yml/badge.svg
+[ico-analysis]: https://github.com/unixslayer/event-store/actions/workflows/static-analysis.yml/badge.svg
+[ico-coverage]: https://coveralls.io/repos/unixslayer/event-store/badge.svg?branch=master&service=github
+[ico-release]: https://img.shields.io/github/v/release/unixslayer/event-store
+[ico-license]: https://img.shields.io/github/license/unixslayer/event-store
 
-[link-github]: https://github.com/unixslayer/event-store
-[link-coverage]: https://coveralls.io/github/unixslayer/event-store
+[link-tests]: https://github.com/unixslayer/event-store/actions/workflows/tests.yml
+[link-analysis]: https://github.com/unixslayer/event-store/actions/workflows/static-analysis.yml
+[link-coverage]: https://coveralls.io/github/unixslayer/event-store?branch=master
 [link-release]: https://github.com/unixslayer/event-store/releases
 [link-license]: LICENSE.md

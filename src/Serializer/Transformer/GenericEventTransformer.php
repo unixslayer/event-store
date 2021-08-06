@@ -50,6 +50,7 @@ final class GenericEventTransformer implements TransformerInterface
     {
         $metadata = $event->metadata();
         $metadata['_messageName'] = get_class($event);
+        $metadata['_eventVersion'] = $this->version();
 
         return $metadata;
     }

@@ -19,7 +19,7 @@ final class GenericEventHydrator implements HydratorInterface
 {
     public function supports(EventData $eventData): bool
     {
-        return true;
+        return $eventData->metadata()['_eventVersion'] === $this->version();
     }
 
     public function toEvent(EventData $eventData): AggregateEvent
@@ -27,5 +27,10 @@ final class GenericEventHydrator implements HydratorInterface
         $messageName = $eventData->metadata()['_messageName'];
 
         return AggregateEvent::fromEventData($messageName, $eventData->uuid(), $eventData->createdAt(), $eventData->metadata(), $eventData->payload());
+    }
+
+    public function version(): int
+    {
+        return 1;
     }
 }

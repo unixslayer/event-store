@@ -21,16 +21,16 @@ use Prooph\EventStore\StreamName;
 use Ramsey\Uuid\UuidInterface;
 use Unixslayer\EventSourcing\AggregateEvent;
 use Unixslayer\EventSourcing\AggregateRoot;
-use Unixslayer\EventStore\Serializer\Hydrator\FromEventDataInterface;
-use Unixslayer\EventStore\Serializer\Transformer\EventToArrayInterface;
+use Unixslayer\EventStore\Serializer\Hydrator\Hydrator;
+use Unixslayer\EventStore\Serializer\Transformer\Transformer;
 
 abstract class AggregateRepository
 {
     private EventStore $eventStore;
-    private EventToArrayInterface $transformer;
-    private FromEventDataInterface $hydrator;
+    private Transformer $transformer;
+    private Hydrator $hydrator;
 
-    public function __construct(EventStore $eventStore, EventToArrayInterface $transformer, FromEventDataInterface $hydrator)
+    public function __construct(EventStore $eventStore, Transformer $transformer, Hydrator $hydrator)
     {
         $this->eventStore = $eventStore;
         $this->transformer = $transformer;

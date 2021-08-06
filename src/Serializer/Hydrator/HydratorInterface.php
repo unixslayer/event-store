@@ -20,4 +20,6 @@ interface HydratorInterface
     public function supports(EventData $eventData): bool;
 
     public function toEvent(EventData $eventData): AggregateEvent;
+
+    public function version(): int;
 }
