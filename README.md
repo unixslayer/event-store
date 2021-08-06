@@ -1,7 +1,8 @@
 # unixslayer/event-store
 
-[![GitHub branch checks state][ico-github]][link-github]
-[![Coveralls github][ico-coverage]][link-coverage]
+[![Tests Status][ico-tests]][link-tests]
+[![Analyse Status][ico-analysis]][link-analysis]
+[![Coverage Status][ico-coverage]][link-coverage]
 [![GitHub release (latest by date)][ico-release]][link-release]
 [![GitHub][ico-license]](LICENSE.md)
 
