@@ -58,6 +58,7 @@ abstract class AggregateRepository
         $streamEvents = new \ArrayIterator($events);
 
         $streamName = new StreamName($this->streamName());
+
         try {
             $this->eventStore->appendTo($streamName, $streamEvents);
         } catch (StreamNotFound $e) {
@@ -73,7 +74,7 @@ abstract class AggregateRepository
         $metadataMatcher = new MetadataMatcher();
         $aggregateType = $this->aggregateType();
         $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateType', Operator::EQUALS(), $aggregateType);
-        $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateId', Operator::EQUALS(), (string) $aggregateId);
+        $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateId', Operator::EQUALS(), (string)$aggregateId);
 
         try {
             $streamEvents = $this->eventStore->load($streamName, 1, null, $metadataMatcher);
