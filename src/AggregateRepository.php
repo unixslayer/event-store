@@ -40,7 +40,7 @@ abstract class AggregateRepository
     public function saveAggregateRoot(AggregateRoot $aggregateRoot): void
     {
         if (!$this->canHandle($aggregateRoot)) {
-            throw new \InvalidArgumentException(sprintf('"%s" cannot handle "%s".', $this::class, get_debug_type($aggregateRoot)));
+            throw new \InvalidArgumentException(sprintf('"%s" cannot handle "%s".', static::class, get_debug_type($aggregateRoot)));
         }
 
         $events = $aggregateRoot->recordedEvents();
