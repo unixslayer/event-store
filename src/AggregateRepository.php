@@ -39,8 +39,8 @@ abstract class AggregateRepository
 
     public function saveAggregateRoot(AggregateRoot $aggregateRoot): void
     {
-        if (($aggregateType = \get_class($aggregateRoot)) !== $this->aggregateType()) {
-            throw new \InvalidArgumentException(sprintf('Expecting %s, got %s', $this->aggregateType(), $aggregateType));
+        if (!$this->canHandle($aggregateRoot)) {
+            throw new \InvalidArgumentException(sprintf('"%s" cannot handle "%s".', $this::class, get_debug_type($aggregateRoot)));
         }
 
         $events = $aggregateRoot->recordedEvents();
@@ -57,22 +57,23 @@ abstract class AggregateRepository
 
         $streamEvents = new \ArrayIterator($events);
 
+        $streamName = new StreamName($this->streamName());
         try {
-            $this->eventStore->appendTo($this->streamName(), $streamEvents);
+            $this->eventStore->appendTo($streamName, $streamEvents);
         } catch (StreamNotFound $e) {
             //if event stream was not found, repository will tell EventStore to create new one saving events
-            $stream = new Stream($this->streamName(), $streamEvents);
+            $stream = new Stream($streamName, $streamEvents);
             $this->eventStore->create($stream);
         }
     }
 
     public function getAggregateRoot(UuidInterface $aggregateId): ?AggregateRoot
     {
-        $streamName = $this->streamName();
+        $streamName = new StreamName($this->streamName());
         $metadataMatcher = new MetadataMatcher();
         $aggregateType = $this->aggregateType();
         $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateType', Operator::EQUALS(), $aggregateType);
-        $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateId', Operator::EQUALS(), (string)$aggregateId);
+        $metadataMatcher = $metadataMatcher->withMetadataMatch('_aggregateId', Operator::EQUALS(), (string) $aggregateId);
 
         try {
             $streamEvents = $this->eventStore->load($streamName, 1, null, $metadataMatcher);
@@ -90,10 +91,14 @@ abstract class AggregateRepository
             return $carrier;
         }, []);
 
-        return $aggregateType::fromHistory($aggregateEvents);
+        return $this->recreateAggregate($aggregateEvents);
     }
 
     abstract protected function aggregateType(): string;
 
-    abstract protected function streamName(): StreamName;
+    abstract protected function canHandle(AggregateRoot $aggregateRoot): bool;
+
+    abstract protected function streamName(): string;
+
+    abstract protected function recreateAggregate(array $aggregateEvents): AggregateRoot;
 }

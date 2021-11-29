@@ -12,18 +12,30 @@ declare(strict_types=1);
 
 namespace Unixslayer\EventStore\Mock;
 
-use Prooph\EventStore\StreamName;
+use Unixslayer\EventSourcing\AggregateRoot;
 use Unixslayer\EventStore\AggregateRepository;
 
 final class Repository extends AggregateRepository
 {
+    private const AGGREGATE_STREAM_NAME = 'aggregate';
+
     protected function aggregateType(): string
     {
-        return Aggregate::class;
+        return self::AGGREGATE_STREAM_NAME;
     }
 
-    protected function streamName(): StreamName
+    protected function streamName(): string
     {
-        return new StreamName('aggregate');
+        return self::AGGREGATE_STREAM_NAME;
+    }
+
+    protected function canHandle(AggregateRoot $aggregateRoot): bool
+    {
+        return $aggregateRoot instanceof Aggregate;
+    }
+
+    protected function recreateAggregate(array $aggregateEvents): AggregateRoot
+    {
+        return Aggregate::fromHistory($aggregateEvents);
     }
 }
